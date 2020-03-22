@@ -71,13 +71,10 @@ public class AppPanel extends JPanel implements Runnable, MouseMotionListener
         ArrayList<Ray> rays = new ArrayList<>();
 
         for (int i = 0; i < resolution; i++) {
-            double dir = (Math.PI * 2) * ((double) i / resolution); // wybiera kiedunek promienia
-            float minDist = maxDist; // dystans rysowania linii jest ustawiony na maksymalny
+            double dir = (Math.PI * 2) * ((double) i / resolution);
+            float minDist = maxDist;
             for (Boundary boundary : boundaries) {
-                // mierzy dystans pomiędzy początkiem raya a przeszkodą
                 float dist = getRayCast(mx,my,mx + (float)Math.cos(dir) * maxDist, my + (float)Math.sin(dir) * maxDist,boundary.getX1(), boundary.getY1(), boundary.getX2(), boundary.getY2());
-                // jeżeli dystans pomiedzy rayem a przeszkoda jest mniejszy od maksymalnego dystansu to linia przestaje byc rysowana dalej niz obiekt
-                // dystans mysi byc wiekszy od zera
                 if (dist < minDist && dist > 0) {
                     minDist = dist;
                 }
@@ -106,14 +103,13 @@ public class AppPanel extends JPanel implements Runnable, MouseMotionListener
         t = (s2_x * (p0_y - p2_y) - s2_y * (p0_x - p2_x)) / (-s2_x * s1_y + s1_x * s2_y);
 
         if (s >= 0 && s <= 1 && t >= 0 && t <= 1) {
-            // Collision detected
             float x = p0_x + (t * s1_x);
             float y = p0_y + (t * s1_y);
 
             return dist(p0_x, p0_y, x, y);
         }
 
-        return -1; // No collision
+        return -1;
     }
 
     public void paint(Graphics g) {
